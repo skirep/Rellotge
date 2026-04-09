@@ -1,44 +1,261 @@
 <!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<title>index</title>
-		<script type="text/javascript" src="funcions.js"></script>
-	    <style>
-	    	body
-	    	{
-	    		background-image: url("img/fons.jpg");
-	    		background-size: cover;
-	    	}
-			.centrar
-			{
-				position: absolute;
-				top:50%;
-				left:50%;
-				width:600px;
-				margin-left:-300px;
-				height:128px;
-				margin-top:-150px;
-				border:0px solid #808080;
-				padding:5px;
-			}
-	    </style>
-	</head>
+<html lang="ca">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rellotge Mundial</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-	<body>
-		<div class="centrar">
-			<img src="img/0.png" id="hora1"/>
-			<img src="img/0.png" id="hora2"/>
-			<img src="img/dospunts.png"/>
-			<img src="img/0.png" id="minut1"/>
-			<img src="img/0.png" id="minut2"/>
-			<img src="img/dospunts.png"/>
-			<img src="img/0.png" id="segon1"/>
-			<img src="img/0.png" id="segon2"/>
+    body {
+      background: linear-gradient(135deg, #0a0a1a 0%, #0d1b2a 50%, #0a0a1a 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      color: #fff;
+      padding: 20px;
+    }
 
-			<script type="text/javascript">
- 				imprimirHora();					 
-			</script>
-		</div>
-	</body>
+    h1 {
+      font-size: 1.2rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #88aacc;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 16px;
+      align-items: center;
+      width: 100%;
+      max-width: 1100px;
+    }
+
+    .cities-left,
+    .cities-right {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* City card */
+    .city-card {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      padding: 14px 18px;
+      text-align: center;
+      transition: background 0.3s;
+    }
+
+    .city-card:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .city-name {
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      color: #88aacc;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+
+    .city-label {
+      font-size: 0.95rem;
+      color: #cce0ff;
+      margin-bottom: 6px;
+      font-style: italic;
+    }
+
+    .city-time {
+      font-size: 1.6rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: #e0f0ff;
+    }
+
+    /* Barcelona center */
+    .barcelona-card {
+      background: rgba(255, 200, 60, 0.08);
+      border: 2px solid rgba(255, 200, 60, 0.5);
+      border-radius: 20px;
+      padding: 30px 40px;
+      text-align: center;
+      min-width: 280px;
+      box-shadow: 0 0 40px rgba(255, 200, 60, 0.15);
+    }
+
+    .barcelona-label {
+      font-size: 0.85rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #ffcc3c;
+      margin-bottom: 8px;
+    }
+
+    .barcelona-city {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #ffd966;
+      margin-bottom: 16px;
+      letter-spacing: 0.05em;
+    }
+
+    .barcelona-time {
+      font-size: 3.8rem;
+      font-weight: 200;
+      letter-spacing: 0.06em;
+      color: #fff8e1;
+      line-height: 1;
+    }
+
+    .barcelona-date {
+      font-size: 0.9rem;
+      color: #ffcc3c;
+      margin-top: 12px;
+      letter-spacing: 0.05em;
+    }
+
+    @media (max-width: 768px) {
+      .dashboard {
+        grid-template-columns: 1fr;
+      }
+      .cities-left, .cities-right {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Rellotge Mundial</h1>
+
+  <div class="dashboard">
+    <!-- Left cities -->
+    <div class="cities-left">
+      <div class="city-card">
+        <div class="city-name">New York</div>
+        <div class="city-label">New York</div>
+        <div class="city-time" id="clock-new_york">--:--:--</div>
+      </div>
+      <div class="city-card">
+        <div class="city-name">London</div>
+        <div class="city-label">London</div>
+        <div class="city-time" id="clock-london">--:--:--</div>
+      </div>
+      <div class="city-card">
+        <div class="city-name">Moscou</div>
+        <div class="city-label">Москва</div>
+        <div class="city-time" id="clock-moscow">--:--:--</div>
+      </div>
+      <div class="city-card">
+        <div class="city-name">Dubai</div>
+        <div class="city-label">دبي</div>
+        <div class="city-time" id="clock-dubai">--:--:--</div>
+      </div>
+      <div class="city-card">
+        <div class="city-name">Mumbai</div>
+        <div class="city-label">मुंबई</div>
+        <div class="city-time" id="clock-mumbai">--:--:--</div>
+      </div>
+    </div>
+
+    <!-- Center: Barcelona -->
+    <div class="barcelona-card">
+      <div class="barcelona-label">Hora actual</div>
+      <div class="barcelona-city">Barcelona</div>
+      <div class="barcelona-time" id="clock-barcelona">--:--:--</div>
+      <div class="barcelona-date" id="date-barcelona">--</div>
+    </div>
+
+    <!-- Right cities -->
+    <div class="cities-right">
+      <div class="city-card">
+        <div class="city-name">Pequín</div>
+        <div class="city-label">北京</div>
+        <div class="city-time" id="clock-beijing">--:--:--</div>
+      </div>
+      <div class="city-card">
+        <div class="city-name">Tòquio</div>
+        <div class="city-label">東京</div>
+        <div class="city-time" id="clock-tokyo">--:--:--</div>
+      </div>
+      <div class="city-card">
+        <div class="city-name">Sydney</div>
+        <div class="city-label">Sydney</div>
+        <div class="city-time" id="clock-sydney">--:--:--</div>
+      </div>
+      <div class="city-card">
+        <div class="city-name">São Paulo</div>
+        <div class="city-label">São Paulo</div>
+        <div class="city-time" id="clock-sao_paulo">--:--:--</div>
+      </div>
+      <div class="city-card">
+        <div class="city-name">Mèxic</div>
+        <div class="city-label">Ciudad de México</div>
+        <div class="city-time" id="clock-mexico">--:--:--</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var CITIES = [
+      { id: 'barcelona',  tz: 'Europe/Madrid',        dateId: 'date-barcelona' },
+      { id: 'new_york',   tz: 'America/New_York' },
+      { id: 'london',     tz: 'Europe/London' },
+      { id: 'moscow',     tz: 'Europe/Moscow' },
+      { id: 'dubai',      tz: 'Asia/Dubai' },
+      { id: 'mumbai',     tz: 'Asia/Kolkata' },
+      { id: 'beijing',    tz: 'Asia/Shanghai' },
+      { id: 'tokyo',      tz: 'Asia/Tokyo' },
+      { id: 'sydney',     tz: 'Australia/Sydney' },
+      { id: 'sao_paulo',  tz: 'America/Sao_Paulo' },
+      { id: 'mexico',     tz: 'America/Mexico_City' }
+    ];
+
+    var CA_DAYS = ['diumenge','dilluns','dimarts','dimecres','dijous','divendres','dissabte'];
+    var CA_MONTHS = ['gener','febrer','març','abril','maig','juny','juliol','agost','setembre','octubre','novembre','desembre'];
+
+    function pad(n) {
+      return n < 10 ? '0' + n : '' + n;
+    }
+
+    function updateClocks() {
+      var now = new Date();
+      for (var i = 0; i < CITIES.length; i++) {
+        var city = CITIES[i];
+        var opts = { timeZone: city.tz, hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+        var timeStr = now.toLocaleTimeString('ca-ES', opts);
+        var el = document.getElementById('clock-' + city.id);
+        if (el) el.textContent = timeStr;
+
+        if (city.dateId) {
+          var dateOpts = { timeZone: city.tz, weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+          var dateParts = new Intl.DateTimeFormat('ca-ES', dateOpts).formatToParts(now);
+          var dateMap = {};
+          for (var j = 0; j < dateParts.length; j++) {
+            dateMap[dateParts[j].type] = dateParts[j].value;
+          }
+          var dateEl = document.getElementById(city.dateId);
+          if (dateEl) {
+            dateEl.textContent = dateMap.weekday + ', ' + dateMap.day + ' de ' + dateMap.month + ' de ' + dateMap.year;
+          }
+        }
+      }
+      setTimeout(updateClocks, 1000);
+    }
+
+    updateClocks();
+  </script>
+</body>
 </html>
