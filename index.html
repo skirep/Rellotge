@@ -223,13 +223,6 @@
       { id: 'mexico',     tz: 'America/Mexico_City' }
     ];
 
-    var CA_DAYS = ['diumenge','dilluns','dimarts','dimecres','dijous','divendres','dissabte'];
-    var CA_MONTHS = ['gener','febrer','març','abril','maig','juny','juliol','agost','setembre','octubre','novembre','desembre'];
-
-    function pad(n) {
-      return n < 10 ? '0' + n : '' + n;
-    }
-
     function updateClocks() {
       var now = new Date();
       for (var i = 0; i < CITIES.length; i++) {
